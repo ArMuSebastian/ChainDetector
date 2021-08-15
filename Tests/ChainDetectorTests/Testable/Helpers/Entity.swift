@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Entity.swift
 //  
 //
 //  Created by Artem Myshkin on 22.07.2021.

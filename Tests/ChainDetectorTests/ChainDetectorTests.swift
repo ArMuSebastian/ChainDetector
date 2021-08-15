@@ -1,6 +1,10 @@
 import XCTest
-@testable import ChainDetector
-import MatrixKit
+
+import struct MatrixKit.Index
+
+@testable import struct ChainDetector.Accommodation
+import struct ChainDetector.Chain
+import class ChainDetector.ChainDetector
 
 final class ChainDetectorTests: XCTestCase {
 

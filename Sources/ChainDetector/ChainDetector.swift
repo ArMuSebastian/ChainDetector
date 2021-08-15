@@ -13,7 +13,9 @@ open class ChainDetector {
     public typealias Position = MatrixKit.Index
 
     private var checkedIndices: ChekingMask = .init()
-    
+
+    public init() {}
+
     // Find matches in direction
     public func detectChains<Element, Tile, Input: Searchable>(
         from index: Position,
