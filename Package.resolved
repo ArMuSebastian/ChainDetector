@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MatrixKit",
+        "repositoryURL": "https://github.com/ArMuSebastian/MatrixKit",
+        "state": {
+          "branch": "master",
+          "revision": "5f321e2025aa8137eae26cbbce3056c1e08d4899",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
