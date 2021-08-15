@@ -27,7 +27,10 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "ChainDetector",
-            dependencies: []),
+            dependencies: [
+                "MatrixKit"
+            ]
+        ),
         .testTarget(
             name: "ChainDetectorTests",
             dependencies: ["ChainDetector"]),
