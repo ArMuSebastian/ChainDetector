@@ -20,7 +20,7 @@ extension Axis.Direction {
             multiplier: Int
         ) -> Step {
             return .init(horisontal: directionDelta.horisontal * multiplier,
-                          vertical: directionDelta.vertical * multiplier)
+                         vertical: directionDelta.vertical * multiplier)
         }
 
         static
@@ -29,7 +29,7 @@ extension Axis.Direction {
             directionDelta: Step
         ) -> Step {
             return .init(horisontal: directionDelta.horisontal * multiplier,
-                          vertical: directionDelta.vertical * multiplier)
+                         vertical: directionDelta.vertical * multiplier)
         }
 
     }

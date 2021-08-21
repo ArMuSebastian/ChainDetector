@@ -16,20 +16,20 @@ extension TestableThings {
         private init() {}
 
         static var h1 = Board.create(from: TestableThings.BoardPayload.h1)
-
         static var h2 = Board.create(from: TestableThings.BoardPayload.h2)
-
         static var h3 = Board.create(from: TestableThings.BoardPayload.h3)
 
 
-
         static var v1 = Board.create(from: TestableThings.BoardPayload.v1)
-
         static var v2 = Board.create(from: TestableThings.BoardPayload.v2)
-
         static var v3 = Board.create(from: TestableThings.BoardPayload.v3)
-        
+
+
         static var d1 = Board.create(from: TestableThings.BoardPayload.d1)
+        static var d2 = Board.create(from: TestableThings.BoardPayload.d2)
+
+
+        static var o2 = Board.create(from: TestableThings.BoardPayload.hole1)
     }
 
 }

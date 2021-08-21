@@ -133,6 +133,45 @@ extension TestableThings {
             return (elements, mask)
         }
 
+        static var d2: Payload {
+
+            let types = createTypes(
+                [
+                    [ .d, .a, .d, .d],
+                    [ .d, .d, .d, .d],
+                    [ .d, .c, .d, .d],
+                    [ .d, .a, .d, .c]
+                ]
+            )
+
+            let elements = createElementsMatrix(from: types)
+            let mask = createMask(.fromSize(elements.size))
+            return (elements, mask)
+        }
+
+        static var hole1: Payload {
+
+            let types = createTypes(
+                [
+                    [.a, .b, .c, .d],
+                    [.a, .a, .a, .a],
+                    [.b, .c, .d, .d],
+                    [.c, .d, .a, .b],
+                ]
+            )
+
+            let elements = createElementsMatrix(from: types)
+            let mask = createMask(.some(
+                [
+                    [.normal, .normal, .normal, .normal],
+                    [.normal, .hole,   .normal, .normal],
+                    [.normal, .normal, .normal, .normal],
+                    [.normal, .normal, .normal, .normal],
+                ]
+            ))
+            return (elements, mask)
+        }
+
     }
 
 }
@@ -143,12 +182,13 @@ extension TestableThings.BoardPayload {
     private typealias ElementTypesArray = [[ElementKind]]
 
     private enum MaskCreation {
-        case some(ElementTypesArray)
+        case some([[MatrixOfTiles.Element.Kind]])
         case fromSize(MatrixKit.Size)
     }
     
     static
     private func createTypes(_ types: [[ElementKind]]) -> ElementTypesArray {
+        
         return types
     }
 
@@ -165,8 +205,8 @@ extension TestableThings.BoardPayload {
                 return (0..<size.rows).map { _ in return Tile(type: Tile.Kind.normal) }
             }
             return try! MatrixOfTiles.init(with: tiles)
-        case .some(_):
-            fatalError("Unimplemented")
+        case .some(let types):
+            return try! MatrixOfTiles.init(with: types.map { $0.map { .init(type: $0) } } )
         }
     }
 

@@ -24,13 +24,24 @@ public struct Chain<Element: SearchableElement> {
 
 }
 
-//extension Chain: Comparable {
-//
-//    static func < (lhs: Chain<Element>, rhs: Chain<Element>) -> Bool {
-//        <#code#>
-//    }
-//
-//}
+extension Chain: Comparable {
+
+    // chain 1 bigger than chain 2
+    // if chain 1 most top element if topper that chain 2 most top element
+    // if chain 1 most left element if lefter that chain 2 most left element
+    static
+    public func < (lhs: Chain<Element>, rhs: Chain<Element>) -> Bool {
+        switch (lhs.type, rhs.type) {
+        case (.vertical, .horisontal):
+            return lhs.elements.last!.position < rhs.elements.first!.position
+        case (.horisontal, .vertical):
+            return lhs.elements.first!.position < rhs.elements.last!.position
+        case (.horisontal, .horisontal), (.vertical, .vertical):
+            return lhs.elements.first!.position < rhs.elements.first!.position
+        }
+    }
+
+}
 
 extension Chain: Equatable {
 

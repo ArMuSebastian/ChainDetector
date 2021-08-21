@@ -105,6 +105,7 @@ final class ChainDetectorTests: XCTestCase {
 
     }
 
+    // MARK: Doubled chain
     func testAnyStartIndexOnDoubledVerticalAndHorisontalChain1ProducesSameChains() {
 
         let (board, checkingIndices, result) = TestableThings.ChainDetector.c7
@@ -115,10 +116,45 @@ final class ChainDetectorTests: XCTestCase {
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
             chainSet.forEach {
-                print("Kek")
                 print($0)
             }
             XCTAssertEqual(chainSet.first!.count, 2)
+        }
+
+    }
+
+    func testAnyStartIndexOnDoubledVerticalAndHorisontalChain2ProducesSameChains() {
+
+        let (board, checkingIndices, result) = TestableThings.ChainDetector.c8
+
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
+            XCTAssertEqual(result, chainsOnStep)
+            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        } onCompletion: { chainSet in
+            XCTAssertEqual(chainSet.count, 1)
+            chainSet.forEach {
+                print($0)
+            }
+            XCTAssertEqual(chainSet.first!.count, 4)
+        }
+
+    }
+
+    // MARK: Board with holes
+
+    func testHoleBreaksChain() {
+
+        let (board, checkingIndices, result) = TestableThings.ChainDetector.c9
+
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
+            XCTAssertEqual(result, chainsOnStep)
+            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        } onCompletion: { chainSet in
+            XCTAssertEqual(chainSet.count, 1)
+            chainSet.forEach {
+                print($0)
+            }
+            XCTAssertEqual(chainSet.first!.count, 0)
         }
 
     }
@@ -135,7 +171,7 @@ extension ChainDetectorTests {
         var chains: [[Chain<Entity>]] = []
         for index in indices {
 
-            let subChains = ChainDetector().detectChains(from: index, on: board)
+            let subChains = ChainDetector().detectChains(from: index, on: board).sorted()
             chains.append(subChains)
             chainsDetect(subChains)
         }
