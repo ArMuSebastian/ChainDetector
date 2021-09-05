@@ -7,7 +7,7 @@
 
 import struct ChainDetector.Chain
 @testable import struct ChainDetector.Accommodation
-import struct MatrixKit.Index
+import struct MathKit.Index
 
 
 extension TestableThings {

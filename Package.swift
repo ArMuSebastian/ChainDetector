@@ -17,8 +17,8 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(
-            name: "MatrixKit",
-            url: "https://github.com/ArMuSebastian/MatrixKit",
+            name: "MathKit",
+            url: "https://github.com/ArMuSebastian/MathKit",
             .branch("master")
         ),
     ],
@@ -28,7 +28,7 @@ let package = Package(
         .target(
             name: "ChainDetector",
             dependencies: [
-                "MatrixKit"
+                "MathKit"
             ]
         ),
         .testTarget(

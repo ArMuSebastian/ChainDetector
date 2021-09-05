@@ -5,7 +5,7 @@
 //  Created by Artem Myshkin on 22.07.2021.
 //
 
-import struct MatrixKit.Matrix
+import struct MathKit.Matrix
 import protocol ChainDetector.CDSearchableElement
 import protocol ChainDetector.CDSearchableTile
 
@@ -37,8 +37,8 @@ extension TestableThings {
 extension TestableThings.Board {
 
     static func create<Entity: CDSearchableElement, Tile: CDSearchableTile>(
-        from entityMatrix: MatrixKit.Matrix<Entity?>,
-        and tileMatrix: MatrixKit.Matrix<Tile>
+        from entityMatrix: MathKit.Matrix<Entity?>,
+        and tileMatrix: MathKit.Matrix<Tile>
     ) -> Field<Entity, Tile> {
         
         .init(elements: entityMatrix, mask: tileMatrix)

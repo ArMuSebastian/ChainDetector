@@ -4,9 +4,9 @@
 //
 //  Created by Artem Myshkin on 15.08.2021.
 //
-import struct MatrixKit.Matrix
-import struct MatrixKit.Index
-import struct MatrixKit.Size
+import struct MathKit.Matrix
+import struct MathKit.Index
+import struct MathKit.Size
 
 import protocol ChainDetector.CDSearchable
 

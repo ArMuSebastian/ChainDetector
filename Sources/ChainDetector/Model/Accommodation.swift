@@ -5,11 +5,11 @@
 //  Created by Artem Myshkin on 21.07.2021.
 //
 
-import struct MatrixKit.Index
+import struct MathKit.Index
 
 public struct Accommodation<Element: CDSearchableElement>  {
 
-    public typealias Position = MatrixKit.Index
+    public typealias Position = MathKit.Index
 
     public let element: Element
     public let position: Position

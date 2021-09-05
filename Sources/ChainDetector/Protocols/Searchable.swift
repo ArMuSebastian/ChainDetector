@@ -5,8 +5,8 @@
 //  Created by Artem Myshkin on 15.08.2021.
 //
 
-import struct MatrixKit.Size
-import struct MatrixKit.Matrix
+import struct MathKit.Size
+import struct MathKit.Matrix
 
 public protocol CDSearchable {
 

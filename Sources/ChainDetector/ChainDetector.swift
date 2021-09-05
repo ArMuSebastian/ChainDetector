@@ -5,12 +5,13 @@
 //  Created by Artem Myshkin on 18.07.2021.
 //
 
-import struct MatrixKit.Index
+import struct MathKit.Index
+import enum MathKit.Axis
 
 open class ChainDetector {
 
     typealias Search = Axis
-    public typealias Position = MatrixKit.Index
+    public typealias Position = MathKit.Index
     public typealias Searchable = CDSearchable
 
     private var checkedIndices: ChekingMask = .init()

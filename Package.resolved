@@ -2,11 +2,11 @@
   "object": {
     "pins": [
       {
-        "package": "MatrixKit",
-        "repositoryURL": "https://github.com/ArMuSebastian/MatrixKit",
+        "package": "MathKit",
+        "repositoryURL": "https://github.com/ArMuSebastian/MathKit",
         "state": {
           "branch": "master",
-          "revision": "311864f4b3082d4e7e7afcf1d2ff6ba70207fe50",
+          "revision": "d8eda7de746b64d1903adb235cb9f02f89de4966",
           "version": null
         }
       }

@@ -1,6 +1,6 @@
 import XCTest
 
-import struct MatrixKit.Index
+import struct MathKit.Index
 
 @testable import struct ChainDetector.Accommodation
 import struct ChainDetector.Chain

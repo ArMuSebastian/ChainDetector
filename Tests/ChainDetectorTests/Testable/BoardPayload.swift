@@ -5,8 +5,8 @@
 //  Created by Artem Myshkin on 25.07.2021.
 //
 
-import struct MatrixKit.Matrix
-import struct MatrixKit.Size
+import struct MathKit.Matrix
+import struct MathKit.Size
 
 extension TestableThings {
 
@@ -183,7 +183,7 @@ extension TestableThings.BoardPayload {
 
     private enum MaskCreation {
         case some([[MatrixOfTiles.Element.Kind]])
-        case fromSize(MatrixKit.Size)
+        case fromSize(MathKit.Size)
     }
     
     static

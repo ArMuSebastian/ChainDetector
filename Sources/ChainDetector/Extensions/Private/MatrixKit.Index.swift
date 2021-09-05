@@ -5,18 +5,20 @@
 //  Created by Artem Myshkin on 15.08.2021.
 //
 
-import struct MatrixKit.Index
+import struct MathKit.Index
+import enum MathKit.Axis
 
-extension MatrixKit.Index {
+extension MathKit.Index {
 
     static
-    internal func + (index: MatrixKit.Index, step: Axis.Direction.Step) -> MatrixKit.Index {
-        return MatrixKit.Index(row: index.row + step.vertical,
-                               column: index.column + step.horisontal)
+    internal func + (index: MathKit.Index, step: Axis.Direction.Step) -> MathKit.Index {
+        
+        return MathKit.Index(row: index.row + step.vertical,
+                             column: index.column + step.horisontal)
     }
 
     static
-    internal func + (step: Axis.Direction.Step, index: MatrixKit.Index) -> MatrixKit.Index {
+    internal func + (step: Axis.Direction.Step, index: MathKit.Index) -> MathKit.Index {
         return index + step
     }
 
