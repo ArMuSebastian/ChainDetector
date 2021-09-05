@@ -8,10 +8,10 @@
 import struct MatrixKit.Size
 import struct MatrixKit.Matrix
 
-public protocol Searchable {
+public protocol CDSearchable {
 
-    associatedtype Element: SearchableElement
-    associatedtype Tile: SearchableTile
+    associatedtype Element: CDSearchableElement
+    associatedtype Tile: CDSearchableTile
 
     var elements: Matrix<Element?> { get }
     var mask: Matrix<Tile> { get }

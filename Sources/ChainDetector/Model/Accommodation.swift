@@ -7,7 +7,7 @@
 
 import struct MatrixKit.Index
 
-public struct Accommodation<Element: SearchableElement>  {
+public struct Accommodation<Element: CDSearchableElement>  {
 
     public typealias Position = MatrixKit.Index
 

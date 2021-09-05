@@ -5,9 +5,9 @@
 //  Created by Artem Myshkin on 15.08.2021.
 //
 
-public protocol SearchableTile: Hashable {
+public protocol CDSearchableTile: Hashable {
 
-    associatedtype Kind: SearchableTileType
+    associatedtype Kind: CDSearchableTileType
 
     var type: Kind { get }
 

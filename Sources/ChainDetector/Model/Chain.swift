@@ -5,7 +5,7 @@
 //  Created by Artem Myshkin on 19.07.2021.
 //
 
-public struct Chain<Element: SearchableElement> {
+public struct Chain<Element: CDSearchableElement> {
 
     public enum Model: Int, Hashable {
 

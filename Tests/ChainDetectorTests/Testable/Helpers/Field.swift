@@ -8,12 +8,12 @@ import struct MatrixKit.Matrix
 import struct MatrixKit.Index
 import struct MatrixKit.Size
 
-import protocol ChainDetector.Searchable
+import protocol ChainDetector.CDSearchable
 
-import protocol ChainDetector.SearchableElement
-import protocol ChainDetector.SearchableTile
+import protocol ChainDetector.CDSearchableElement
+import protocol ChainDetector.CDSearchableTile
 
-struct Field<Entity: SearchableElement, Tile: SearchableTile>: Searchable {
+struct Field<Entity: CDSearchableElement, Tile: CDSearchableTile>: CDSearchable {
 
     private(set) var elements: Matrix<Entity?>
     private(set) var mask: Matrix<Tile>

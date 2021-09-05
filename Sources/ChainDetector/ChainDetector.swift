@@ -11,6 +11,7 @@ open class ChainDetector {
 
     typealias Search = Axis
     public typealias Position = MatrixKit.Index
+    public typealias Searchable = CDSearchable
 
     private var checkedIndices: ChekingMask = .init()
 
@@ -122,7 +123,7 @@ open class ChainDetector {
 
 extension ChainDetector {
 
-    private func createChain<Element: SearchableElement>(
+    private func createChain<Element: CDSearchableElement>(
         from searchResult: [Accommodation<Element>],
         search: Search
     ) -> Chain<Element>? {

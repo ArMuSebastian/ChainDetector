@@ -5,17 +5,17 @@
 //  Created by Artem Myshkin on 22.07.2021.
 //
 
-import protocol ChainDetector.SearchableElement
-import protocol ChainDetector.SearchableElementType
+import protocol ChainDetector.CDSearchableElement
+import protocol ChainDetector.CDSearchableElementType
 
-struct Entity: SearchableElement {
+struct Entity: CDSearchableElement {
 
     var type: `Type`
 }
 
 extension Entity {
 
-    enum `Type`: SearchableElementType {
+    enum `Type`: CDSearchableElementType {
 
         case a
         case b

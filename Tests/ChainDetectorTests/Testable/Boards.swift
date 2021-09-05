@@ -6,8 +6,8 @@
 //
 
 import struct MatrixKit.Matrix
-import protocol ChainDetector.SearchableElement
-import protocol ChainDetector.SearchableTile
+import protocol ChainDetector.CDSearchableElement
+import protocol ChainDetector.CDSearchableTile
 
 extension TestableThings {
 
@@ -36,7 +36,7 @@ extension TestableThings {
 
 extension TestableThings.Board {
 
-    static func create<Entity: SearchableElement, Tile: SearchableTile>(
+    static func create<Entity: CDSearchableElement, Tile: CDSearchableTile>(
         from entityMatrix: MatrixKit.Matrix<Entity?>,
         and tileMatrix: MatrixKit.Matrix<Tile>
     ) -> Field<Entity, Tile> {

@@ -5,17 +5,17 @@
 //  Created by Artem Myshkin on 22.07.2021.
 //
 
-import protocol ChainDetector.SearchableTile
-import protocol ChainDetector.SearchableTileType
+import protocol ChainDetector.CDSearchableTile
+import protocol ChainDetector.CDSearchableTileType
 
-struct Tile: SearchableTile {
+struct Tile: CDSearchableTile {
 
     var type: `Type`
 }
 
 extension Tile {
 
-    enum `Type`: Int, SearchableTileType {
+    enum `Type`: Int, CDSearchableTileType {
 
         case empty = 0
         case normal
