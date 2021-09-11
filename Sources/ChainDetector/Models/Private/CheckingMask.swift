@@ -21,7 +21,7 @@ extension ChainDetector.ChekingMask {
 
     mutating
     func consider(
-        check performedSearch: ChainDetector.Search,
+        check performedSearch: ChainDetector.SearchAxis,
         at indices: [MathKit.Index]
     ) {
 
@@ -31,7 +31,7 @@ extension ChainDetector.ChekingMask {
 
     mutating
     func consider(
-        check performedSearch: ChainDetector.Search,
+        check performedSearch: ChainDetector.SearchAxis,
         at index: MathKit.Index
     ) {
 
@@ -47,10 +47,10 @@ extension ChainDetector.ChekingMask {
 
     func search(
         for index: MathKit.Index
-    ) -> ChainDetector.Search? {
+    ) -> ChainDetector.SearchAxis? {
         let currentCheckStatus = performedChecks[index]
 
-        let desiredSearch: ChainDetector.Search?
+        let desiredSearch: ChainDetector.SearchAxis?
         switch currentCheckStatus {
         case .all:
             desiredSearch = nil
@@ -70,7 +70,7 @@ extension ChainDetector.ChekingMask {
 
     private
     func check(
-        for search: ChainDetector.Search
+        for search: ChainDetector.SearchAxis
     ) -> Check {
         switch search {
         case .vertical:

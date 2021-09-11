@@ -10,49 +10,53 @@ import enum MathKit.Axis
 
 open class ChainDetector {
 
-    typealias Search = Axis
+    internal typealias SearchAxis = Axis
     public typealias Position = MathKit.Index
     public typealias Searchable = CDSearchable
+    public typealias Combable = CDCombo
 
     private var checkedIndices: ChekingMask = .init()
 
     public init() {}
 
     // Find matches in direction
-    public func detectChains<Element, Tile, Input: Searchable>(
+    public func detectChains<Element, Tile, Input: Searchable, Combo: Combable>(
         from index: Position,
-        on board: Input
-    ) -> [Chain<Element>]
-    where Input.Element == Element, Input.Tile == Tile {
+        on input: Input
+    ) -> [Combo]
+    where Input.Element == Element, Input.Tile == Tile,
+          Combo.Echelon.Element == Element, Combo.Echelon.Position == Position {
 
         return performSearch(from: index,
-                             on: board)
+                             on: input)
     }
 
-    private func performSearch<Element, Tile, Input: Searchable>(
+    private func performSearch<Element, Tile, Input: Searchable, Combo: Combable>(
         from startingIndex: Position,
-        on board: Input
-    ) -> [Chain<Element>]
-    where Input.Element == Element, Input.Tile == Tile {
+        on input: Input
+    ) -> [Combo]
+    where Input.Element == Element, Input.Tile == Tile,
+          Combo.Echelon.Element == Element, Combo.Echelon.Position == Position {
 
         guard checkedIndices.shouldBeChecked(at: startingIndex),
               let search = checkedIndices.search(for: startingIndex) else {
             return []
         }
-        
 
-        guard let chain = findChain(search: search, from: startingIndex, on: board) else {
+        guard let chain: Combo = findChain(search: search, from: startingIndex, on: input) else {
 
             checkedIndices.consider(check: search, at: startingIndex)
 
-            return performSearch(from: startingIndex, on: board)
+            return performSearch(from: startingIndex, on: input)
         }
         
         checkedIndices.consider(check: search, at: chain.elements.map { $0.position })
 
-        let subc = chain.elements
-            .map { performSearch(from: $0.position, on: board) }
-            .compactMap{ $0 }
+        let subc: [Combo] = chain.elements
+            .map { (echalon: Combo.Echelon) -> [Combo] in
+                let chains: [Combo] = performSearch(from: echalon.position, on: input)
+                return chains
+            }
             .flatMap { $0 }
 
         return [chain] + subc
@@ -60,87 +64,82 @@ open class ChainDetector {
 
     // searches for all elements of seartain type in some axis from some index
     // with natural ordering
-    private func findChain<Element, Tile, Input: Searchable>(
-        search: Search,
+    private func findChain<Element, Tile, Input: Searchable, Combo: Combable>(
+        search: SearchAxis,
         from startingIndex: Position,
-        on board: Input
-    ) -> Chain<Input.Element>?
-    where Input.Element == Element, Input.Tile == Tile {
+        on input: Input
+    ) -> Combo?
+    where Input.Element == Element, Input.Tile == Tile,
+          Combo.Echelon.Element == Element, Combo.Echelon.Position == Position {
 
-        guard board.size.contains(startingIndex),
-              board.mask[startingIndex].type != .hole else {
+        guard input.size.contains(startingIndex),
+              input.mask[startingIndex].type != .hole else {
             return nil
         }
 
-        let element = board.elements[startingIndex]!
-        let accomodation = Accommodation(element: element, position: startingIndex)
+        let element = input.elements[startingIndex]!
+        let accomodation = Combo.Echelon.init(element: element, position: startingIndex)
         let directions = search.directions
 
-        let firstAccommodation = collectElements(in: directions.first,
-                                                 from: startingIndex,
-                                                 with: element.type,
-                                                 on: board).reversed()
+        let firstAccommodation: [Combo.Echelon] = collectElements(in: directions.first,
+                                                                  from: startingIndex,
+                                                                  with: element.type,
+                                                                  on: input).reversed()
 
-        let secondAccommodation = collectElements(in: directions.second,
-                                                  from: startingIndex,
-                                                  with: element.type,
-                                                  on: board)
+        let secondAccommodation: [Combo.Echelon] = collectElements(in: directions.second,
+                                                                   from: startingIndex,
+                                                                   with: element.type,
+                                                                   on: input)
 
         let accommodation = firstAccommodation + [accomodation] + secondAccommodation
 
-        return createChain(from: accommodation, search: search)
+        return combo(from: accommodation, search: search)
     }
 
     // Collect all element of the same type in some direction
-    private func collectElements<Element, Tile, Input: Searchable>(
-        in direction: Search.Direction,
+    private func collectElements<Element, Tile, Input: Searchable, Echelon: CDEchalon>(
+        in direction: SearchAxis.Direction,
         from startingIndex: Position,
         with type: Input.Element.Kind,
-        on matrix: Input
-    ) -> [Accommodation<Input.Element>]
-    where Input.Element == Element, Input.Tile == Tile {
+        on input: Input
+    ) -> [Echelon]
+    where Input.Element == Element, Input.Tile == Tile,
+          Echelon.Element == Element, Echelon.Position == Position {
 
-        var accomodations = [Accommodation<Element>]()
+        var echelon = [Echelon]()
 
         var searchingIndex = startingIndex + direction.delta
 
-        searchingLoop: while matrix.size.contains(searchingIndex),
-                             matrix.mask[searchingIndex].type != .hole {
+        searchingLoop: while input.size.contains(searchingIndex),
+                             input.mask[searchingIndex].type != .hole {
 
-            let element = matrix.elements[searchingIndex]!
+            let element = input.elements[searchingIndex]!
 
             guard element.type == type else { break searchingLoop }
 
-            accomodations.append(.init(element: element, position: searchingIndex))
+            echelon.append(.init(element: element, position: searchingIndex))
 
             searchingIndex = searchingIndex + direction.delta
 
         }
 
-        return accomodations
+        return echelon
     }
 
 }
 
 extension ChainDetector {
 
-    private func createChain<Element: CDSearchableElement>(
-        from searchResult: [Accommodation<Element>],
-        search: Search
-    ) -> Chain<Element>? {
+    private func combo<Element: CDSearchableElement, Combo: Combable>(
+        from searchResult: [Combo.Echelon],
+        search: SearchAxis
+    ) -> Combo?
+    where Combo.Echelon.Element == Element {
 
-        if searchResult.count > 2 {
-            switch search {
-            case .horisontal:
-                return .init(elements: searchResult,
-                             type: .horisontal)
-            case .vertical:
-                return .init(elements: searchResult,
-                             type: .vertical)
-            }
-        }
+        guard searchResult.count > 2 else { return nil }
 
-        return nil
+        return .init(elements: searchResult,
+                     type: search)
     }
 
 }

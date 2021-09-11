@@ -5,9 +5,10 @@
 //  Created by Artem Myshkin on 21.07.2021.
 //
 
-import struct MathKit.Index
+import ChainDetector
+import MathKit
 
-public struct Accommodation<Element: CDSearchableElement>  {
+public struct Accommodation<Element: CDSearchableElement>: CDEchalon {
 
     public typealias Position = MathKit.Index
 

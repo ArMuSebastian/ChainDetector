@@ -5,19 +5,15 @@
 //  Created by Artem Myshkin on 19.07.2021.
 //
 
-public struct Chain<Element: CDSearchableElement> {
+import ChainDetector
+import MathKit
 
-    public enum Model: Int, Hashable {
+public struct Chain<Element: CDSearchableElement>: CDCombo {
 
-        case vertical = 1
-        case horisontal = 2
-
-    }
-
-    private(set) public var type: Model
+    private(set) public var type: Axis
     private(set) public var elements: [Accommodation<Element>]
 
-    public init(elements: [Accommodation<Element>], type: Model) {
+    public init(elements: [Accommodation<Element>], type: Axis) {
         self.elements = elements
         self.type = type
     }

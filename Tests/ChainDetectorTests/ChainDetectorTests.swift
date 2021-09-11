@@ -2,9 +2,8 @@ import XCTest
 
 import struct MathKit.Index
 
-@testable import struct ChainDetector.Accommodation
-import struct ChainDetector.Chain
-import class ChainDetector.ChainDetector
+@testable import ChainDetector
+//import class ChainDetector.ChainDetector
 
 final class ChainDetectorTests: XCTestCase {
 
@@ -16,7 +15,7 @@ final class ChainDetectorTests: XCTestCase {
             let nonMatchingIndices = Set(test.board.elements.indices).subtracting(test.indices)
             
             nonMatchingIndices.sorted().forEach { index in
-                let chains = ChainDetector().detectChains(from: index, on: test.board)
+                let chains: [Chain] = ChainDetector().detectChains(from: index, on: test.board)
                 XCTAssertTrue(chains.isEmpty,
                               "Failed test \(testIndex) index \(index): must produce no chain")
             }
@@ -171,7 +170,7 @@ extension ChainDetectorTests {
         var chains: [[Chain<Entity>]] = []
         for index in indices {
 
-            let subChains = ChainDetector().detectChains(from: index, on: board).sorted()
+            let subChains: [Chain] = ChainDetector().detectChains(from: index, on: board).sorted()
             chains.append(subChains)
             chainsDetect(subChains)
         }

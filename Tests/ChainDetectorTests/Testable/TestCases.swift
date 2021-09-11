@@ -5,8 +5,7 @@
 //  Created by Artem Myshkin on 25.07.2021.
 //
 
-import struct ChainDetector.Chain
-@testable import struct ChainDetector.Accommodation
+@testable import ChainDetector
 import struct MathKit.Index
 
 
