@@ -25,7 +25,8 @@ open class ChainDetector {
         on input: Input
     ) -> [Combo]
     where Input.Element == Element, Input.Tile == Tile,
-          Combo.Echelon.Element == Element, Combo.Echelon.Position == Position {
+          Input.Element == Combo.Echelon.Element,
+          Combo.Echelon.Position == Position {
 
         return performSearch(from: index,
                              on: input)
