@@ -36,7 +36,8 @@ open class ChainDetector {
         on input: Input
     ) -> [Combo]
     where Input.Element == Element, Input.Tile == Tile,
-          Combo.Echelon.Element == Element, Combo.Echelon.Position == Position {
+          Input.Element == Combo.Echelon.Element,
+          Combo.Echelon.Position == Position {
 
         guard checkedIndices.shouldBeChecked(at: startingIndex),
               let search = checkedIndices.search(for: startingIndex) else {
@@ -70,7 +71,8 @@ open class ChainDetector {
         on input: Input
     ) -> Combo?
     where Input.Element == Element, Input.Tile == Tile,
-          Combo.Echelon.Element == Element, Combo.Echelon.Position == Position {
+          Input.Element == Combo.Echelon.Element,
+          Combo.Echelon.Position == Position {
 
         guard input.size.contains(startingIndex),
               input.mask[startingIndex].type != .hole else {
@@ -104,7 +106,8 @@ open class ChainDetector {
         on input: Input
     ) -> [Echelon]
     where Input.Element == Element, Input.Tile == Tile,
-          Echelon.Element == Element, Echelon.Position == Position {
+          Input.Element == Echelon.Element,
+          Echelon.Position == Position {
 
         var echelon = [Echelon]()
 
