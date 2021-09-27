@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "MathKit",
-        "repositoryURL": "https://github.com/ArMuSebastian/MathKit",
+        "repositoryURL": "https://gitlab.com/ArMuSebastian/MathKit",
         "state": {
           "branch": "master",
-          "revision": "25be70c20b573027f4ac2bfa4e6b27da89b06293",
+          "revision": "32c44ff11d56e51dd0c4b74ac12dd336299ad47b",
           "version": null
         }
       }

@@ -18,7 +18,7 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
         .package(
             name: "MathKit",
-            url: "https://github.com/ArMuSebastian/MathKit",
+            url: "https://gitlab.com/ArMuSebastian/MathKit",
             .branch("master")
         ),
     ],
