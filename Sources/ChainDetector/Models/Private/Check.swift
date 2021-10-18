@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 extension ChainDetector.ChekingMask {
 
     enum Check {

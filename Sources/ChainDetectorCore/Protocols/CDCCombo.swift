@@ -1,5 +1,5 @@
 //
-//  CDCombo.swift
+//  CDCCombo.swift
 //  
 //
 //  Created by Artem Myshkin on 11.09.2021.
@@ -7,8 +7,7 @@
 
 import enum MathKit.Axis
 
-public protocol CDCombo
-where Echelon: CDEchalon {
+public protocol CDCCombo where Echelon: CDCEchalon {
 
     associatedtype Echelon
     associatedtype Element

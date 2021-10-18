@@ -8,10 +8,10 @@
 import struct MathKit.Size
 import struct MathKit.Matrix
 
-public protocol CDSearchable {
+public protocol CDCSearchable {
 
-    associatedtype Element: CDSearchableElement
-    associatedtype Tile: CDSearchableTile
+    associatedtype Element: CDCSearchableElement
+    associatedtype Tile: CDCSearchableTile
 
     var elements: Matrix<Element?> { get }
     var mask: Matrix<Tile> { get }

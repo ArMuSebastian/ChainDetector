@@ -7,6 +7,7 @@
 
 import struct MathKit.Index
 import enum MathKit.Axis
+import ChainDetectorMatrixExtensions
 
 open class ChainDetector {
 

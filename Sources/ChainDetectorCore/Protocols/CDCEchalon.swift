@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol CDEchalon: Hashable {
+public protocol CDCEchalon: Hashable {
 
     associatedtype Position
     associatedtype Element
