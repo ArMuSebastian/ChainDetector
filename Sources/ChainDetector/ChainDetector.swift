@@ -77,11 +77,11 @@ open class ChainDetector {
           Combo.Echelon.Position == Position {
 
         guard input.size.contains(startingIndex),
-              input.mask[startingIndex].type != .hole else {
+              input[startingIndex].tile.type != .hole else {
             return nil
         }
 
-        let element = input.elements[startingIndex]!
+        let element = input[startingIndex].element!
         let accomodation = Combo.Echelon.init(element: element, position: startingIndex)
         let directions = search.directions
 
@@ -116,9 +116,9 @@ open class ChainDetector {
         var searchingIndex = startingIndex + direction.delta
 
         searchingLoop: while input.size.contains(searchingIndex),
-                             input.mask[searchingIndex].type != .hole {
+                             input[searchingIndex].tile.type != .hole {
 
-            let element = input.elements[searchingIndex]!
+            let element = input[searchingIndex].element!
 
             guard element.type == type else { break searchingLoop }
 

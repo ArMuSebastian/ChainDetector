@@ -5,16 +5,20 @@
 //  Created by Artem Myshkin on 15.08.2021.
 //
 
+import struct MathKit.Index
 import struct MathKit.Size
 import struct MathKit.Matrix
 
-public protocol CDCSearchable {
+public protocol CDCSearchable
+where Content.Element == Self.Element, Content.Tile == Self.Tile {
 
-    associatedtype Element: CDCSearchableElement
-    associatedtype Tile: CDCSearchableTile
+    associatedtype Element
+    associatedtype Tile
+    associatedtype Content: CDCCellContainer
 
-    var elements: Matrix<Element?> { get }
-    var mask: Matrix<Tile> { get }
+    var grid: Matrix<Content> { get }
     var size: Size { get }
+
+    subscript(_ index: Index) -> Content { get }
 
 }

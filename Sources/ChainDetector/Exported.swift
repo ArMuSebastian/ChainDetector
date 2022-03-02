@@ -10,6 +10,7 @@ import ChainDetectorCore
 public typealias CDCombo = CDCCombo
 public typealias CDEchalon = CDCEchalon
 public typealias CDSearchable = CDCSearchable
+public typealias CDCellContainer = CDCCellContainer
 
 public typealias CDSearchableTile = CDCSearchableTile
 public typealias CDSearchableTileType = CDCSearchableTileType
