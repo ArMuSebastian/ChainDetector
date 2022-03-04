@@ -16,7 +16,6 @@ where Content.Element == Self.Element, Content.Tile == Self.Tile {
     associatedtype Tile
     associatedtype Content: CDCCellContainer
 
-    var grid: Matrix<Content> { get }
     var size: Size { get }
 
     subscript(_ index: Index) -> Content { get }

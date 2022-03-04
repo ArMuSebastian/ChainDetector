@@ -1,19 +1,10 @@
-//
-//  Tile.swift
-//  
-//
-//  Created by Artem Myshkin on 22.07.2021.
-//
-
-import protocol ChainDetector.CDSearchableTile
-import protocol ChainDetector.CDSearchableTileType
-
-struct Tile: CDSearchableTile {
+struct SomeTile: CDSearchableTile {
 
     var type: `Type`
+
 }
 
-extension Tile {
+extension SomeTile {
 
     enum `Type`: Int, CDSearchableTileType {
 
@@ -22,7 +13,7 @@ extension Tile {
         case double
         case tripple
 
-        static var hole: Tile.`Type` = .empty
+        static var hole: SomeTile.`Type` = .empty
 
     }
     

@@ -1,23 +1,22 @@
-//
-//  File.swift
-//  
-//
-//  Created by Artem Myshkin on 25.07.2021.
-//
-
-@testable import ChainDetector
-import struct MathKit.Index
-
-
 extension TestableThings {
-    
+
     struct ChainDetector {
 
-        typealias TestCase = (board: Field<Entity, Tile>, indices: [Index], result: [Chain<Entity>])
+        struct TestCase<Cell: CellContainerRequirement> {
+
+            var board: TheBoard<Cell>
+            var indices: [Index]
+            var result: [Chain<Cell.Element>]
+
+        }
+
+        typealias ThisCell = TheBoardCell<TheElement, TheTile>
+        typealias TheTestCase = TestCase<ThisCell>
+
 
         private init() {}
 
-        static var allCases: [TestCase] {
+        static var allCases: [TheTestCase] {
             return
                 [
                     c1, c2, c3,
@@ -25,44 +24,44 @@ extension TestableThings {
                 ]
         }
         
-        static var c1: TestCase {
+        static var c1: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: 3, column: $0) }],
                                board: TestableThings.Board.h1)
         }
 
-        static var c2: TestCase {
+        static var c2: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: 2, column: $0) }],
                                board: TestableThings.Board.h2)
         }
 
-        static var c3: TestCase {
+        static var c3: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: 0, column: $0) }],
                                board: TestableThings.Board.h3)
         }
 
         
-        static var c4: TestCase {
+        static var c4: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: $0, column: 3) }],
                                board: TestableThings.Board.v1)
         }
 
-        static var c5: TestCase {
+        static var c5: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: $0, column: 2) }],
                                board: TestableThings.Board.v2)
         }
 
-        static var c6: TestCase {
+        static var c6: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: $0, column: 0) }],
                                board: TestableThings.Board.v3)
         }
 
-        static var c7: TestCase {
+        static var c7: TheTestCase {
 
             return composeTest(indices:
                                 [(0...3).map { .init(row: $0, column: 0) }]
@@ -71,7 +70,7 @@ extension TestableThings {
                                board: TestableThings.Board.d1)
         }
 
-        static var c8: TestCase {
+        static var c8: TheTestCase {
 
             return composeTest(indices:
                                 [(0...3).map { .init(row: $0, column: 0) }]
@@ -84,7 +83,7 @@ extension TestableThings {
                                board: TestableThings.Board.d2)
         }
 
-        static var c9: TestCase {
+        static var c9: TheTestCase {
 
             return composeTest(indices: [(1...3).map { .init(row: 1, column: $0) }],
                                board: TestableThings.Board.o2,
@@ -97,10 +96,13 @@ extension TestableThings {
 
 extension TestableThings.ChainDetector {
 
-    static private func chainsFrom(board: Field<Entity, Tile>, indices: [[Index]]) -> [Chain<Entity>] {
-        let chains: [Chain<Entity>] = indices.map { chainIndices in
-            let elements = chainIndices.map { index -> Accommodation<Entity> in
-                let e: Entity = board[by: index]!
+    static private func chainsFrom<Cell: CellContainerRequirement>(
+        board: TheBoard<Cell>,
+        indices: [[Index]]
+    ) -> [Chain<Cell.Element>] {
+        let chains: [Chain<Cell.Element>] = indices.map { chainIndices in
+            let elements = chainIndices.map { index -> Accommodation<Cell.Element> in
+                let e: Cell.Element = board[by: index]!
                 return Accommodation(element: e, position: index)
             }
             
@@ -115,17 +117,19 @@ extension TestableThings.ChainDetector {
         return chains
     }
 
-    private typealias BoardSimple = Field<Entity, Tile>
 
-    static private func composeTest(indices: [[Index]], board: BoardSimple, producesChains: Bool = true) -> TestCase {
+    static private func composeTest<Cell: CellContainerRequirement>(
+        indices: [[Index]],
+        board: TheBoard<Cell>,
+        producesChains: Bool = true
+    ) -> TestCase<Cell> {
         let result = producesChains ? chainsFrom(board: board, indices: indices) : []
 
-        return
-            (
-                board,
-                indices.reduce([]) { $0 + $1 },
-                result.sorted()
-            )
+        return TestCase(
+            board: board,
+            indices: indices.reduce([]) { $0 + $1 },
+            result: result.sorted()
+        )
     }
 
 }

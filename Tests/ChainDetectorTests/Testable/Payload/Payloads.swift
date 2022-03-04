@@ -1,26 +1,22 @@
-//
-//  BoardPayload.swift
-//  
-//
-//  Created by Artem Myshkin on 25.07.2021.
-//
+extension TestableThings.Board {
 
-import struct MathKit.Matrix
-import struct MathKit.Size
+    struct Payload {
 
-extension TestableThings {
+        typealias ElementsMatrix = TheMatrix<TheElement>
+        typealias TileMatrix = TheMatrix<TheTile>
 
-    struct BoardPayload {
+        let elements: ElementsMatrix
+        let mask: TileMatrix
 
-        typealias SomeEntity = Entity
-        typealias SomeTile = Tile
-        typealias MatrixOfElements = Matrix<SomeEntity?>
-        typealias MatrixOfTiles = Matrix<SomeTile>
-        typealias Payload = (elements: MatrixOfElements, mask: MatrixOfTiles)
+        private init(
+            elements: ElementsMatrix,
+            mask: TileMatrix
+        ) {
+            self.elements = elements
+            self.mask = mask
+        }
 
-        private init() {}
-
-        static var h1: Payload {
+        static var h1: Self {
 
             let types = createTypes(
                 [
@@ -32,11 +28,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var h2: Payload {
+        static var h2: Self {
 
             let types = createTypes(
                 [
@@ -48,11 +44,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var h3: Payload {
+        static var h3: Self {
 
             let types = createTypes(
                 [
@@ -64,12 +60,12 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
 
-        static var v1: Payload {
+        static var v1: Self {
 
             let types = createTypes(
                 [
@@ -81,11 +77,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var v2: Payload {
+        static var v2: Self {
 
             let types = createTypes(
                 [
@@ -97,11 +93,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var v3: Payload {
+        static var v3: Self {
 
             let types = createTypes(
                 [
@@ -113,11 +109,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var d1: Payload {
+        static var d1: Self {
 
             let types = createTypes(
                 [
@@ -129,11 +125,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var d2: Payload {
+        static var d2: Self {
 
             let types = createTypes(
                 [
@@ -145,11 +141,11 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.fromSize(elements.size))
-            return (elements, mask)
+            let mask = createMaskMatrix(.fromSize(elements.size))
+            return Self.init(elements: elements, mask: mask)
         }
 
-        static var hole1: Payload {
+        static var hole1: Self {
 
             let types = createTypes(
                 [
@@ -161,7 +157,7 @@ extension TestableThings {
             )
 
             let elements = createElementsMatrix(from: types)
-            let mask = createMask(.some(
+            let mask = createMaskMatrix(.some(
                 [
                     [.normal, .normal, .normal, .normal],
                     [.normal, .hole,   .normal, .normal],
@@ -169,45 +165,47 @@ extension TestableThings {
                     [.normal, .normal, .normal, .normal],
                 ]
             ))
-            return (elements, mask)
+            return Self.init(elements: elements, mask: mask)
         }
 
     }
 
 }
 
-extension TestableThings.BoardPayload {
-
-    typealias ElementKind = SomeEntity.Kind
-    private typealias ElementTypesArray = [[ElementKind]]
+extension TestableThings.Board.Payload {
 
     private enum MaskCreation {
-        case some([[MatrixOfTiles.Element.Kind]])
+        case some([[TileMatrix.Element.Kind]])
         case fromSize(MathKit.Size)
     }
-    
+
     static
-    private func createTypes(_ types: [[ElementKind]]) -> ElementTypesArray {
-        
+    private func createTypes(_ types: [[ElementsMatrix.Element.Kind]]) -> [[ElementsMatrix.Element.Kind]] {
+
         return types
     }
 
     static
-    private func createElementsMatrix(from types: ElementTypesArray) -> MatrixOfElements {
-        return try! MatrixOfElements.init(with: types.map { $0.map(SomeEntity.init(type:)) })
+    private func createElementsMatrix(from types: [[ElementsMatrix.Element.Kind]]) -> ElementsMatrix {
+        return matrix(content: types.map { $0.map(ElementsMatrix.Element.init(type:)) })
     }
 
     static
-    private func createMask(_ creation: MaskCreation) -> MatrixOfTiles {
+    private func createMaskMatrix(_ creation: MaskCreation) -> TileMatrix {
         switch creation {
         case .fromSize(let size):
             let tiles = (0..<size.columns).map { _ in
-                return (0..<size.rows).map { _ in return Tile(type: Tile.Kind.normal) }
+                return (0..<size.rows).map { _ in return TileMatrix.Element(type: TileMatrix.Element.Kind.normal) }
             }
-            return try! MatrixOfTiles.init(with: tiles)
+            return matrix(content: tiles)
         case .some(let types):
-            return try! MatrixOfTiles.init(with: types.map { $0.map { .init(type: $0) } } )
+            return matrix(content: types.map { $0.map { TileMatrix.Element.init(type: $0) } } )
         }
+    }
+
+    static
+    private func matrix<T>(content: [[T]]) -> Matrix<T> {
+        return Matrix(with: content)
     }
 
 }

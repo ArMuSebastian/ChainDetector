@@ -1,19 +1,10 @@
-//
-//  Entity.swift
-//  
-//
-//  Created by Artem Myshkin on 22.07.2021.
-//
-
-import protocol ChainDetector.CDSearchableElement
-import protocol ChainDetector.CDSearchableElementType
-
-struct Entity: CDSearchableElement {
+struct SomeElement: CDSearchableElement {
 
     var type: `Type`
+
 }
 
-extension Entity {
+extension SomeElement {
 
     enum `Type`: CDSearchableElementType {
 

@@ -2,11 +2,20 @@
   "object": {
     "pins": [
       {
+        "package": "ConsoleDrawKit",
+        "repositoryURL": "https://gitlab.com/ArMuSebastian/consoledrawkit",
+        "state": {
+          "branch": "master",
+          "revision": "80a3430495d738b7a07cf4e6e31f08b014e7f332",
+          "version": null
+        }
+      },
+      {
         "package": "MathKit",
         "repositoryURL": "https://gitlab.com/ArMuSebastian/MathKit",
         "state": {
           "branch": "master",
-          "revision": "32c44ff11d56e51dd0c4b74ac12dd336299ad47b",
+          "revision": "a9d3ba0f4e69b8753e4c5a871f5df9656ec55f53",
           "version": null
         }
       }

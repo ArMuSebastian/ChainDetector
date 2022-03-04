@@ -1,13 +1,3 @@
-//
-//  Chain.swift
-//  
-//
-//  Created by Artem Myshkin on 19.07.2021.
-//
-
-import ChainDetector
-import MathKit
-
 public struct Chain<Element: CDSearchableElement>: CDCombo {
 
     private(set) public var type: Axis

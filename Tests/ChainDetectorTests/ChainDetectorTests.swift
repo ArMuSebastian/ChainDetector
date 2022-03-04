@@ -10,27 +10,27 @@ final class ChainDetectorTests: XCTestCase {
     // no chain
     func testAnyOnNonCahinedElementProduceNoChain() {
         let arrayOfTests = TestableThings.ChainDetector.allCases
-        
+
         for (testIndex, test) in arrayOfTests.enumerated() {
             let nonMatchingIndices = Set(test.board.elements.indices).subtracting(test.indices)
-            
+
             nonMatchingIndices.sorted().forEach { index in
                 let chains: [Chain] = ChainDetector().detectChains(from: index, on: test.board)
                 XCTAssertTrue(chains.isEmpty,
                               "Failed test \(testIndex) index \(index): must produce no chain")
             }
         }
+
     }
 
     // MARK: Horisontal line
     func testAnyStartIndexOnLastHorisontalRowProducesSameChain() {
 
-        
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c1
+        let test = TestableThings.ChainDetector.c1
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
         }
@@ -39,11 +39,11 @@ final class ChainDetectorTests: XCTestCase {
 
     func testAnyStartIndexOnCenterHorisontalRowProducesSameChain() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c2
+        let test = TestableThings.ChainDetector.c2
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
         }
@@ -52,11 +52,11 @@ final class ChainDetectorTests: XCTestCase {
 
     func testAnyStartIndexOnFirstHorisontalRowProducesSameChain() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c3
+        let test = TestableThings.ChainDetector.c3
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
         }
@@ -64,14 +64,13 @@ final class ChainDetectorTests: XCTestCase {
     }
 
     // MARK: vertical line
-    
     func testAnyStartIndexOnLastVerticalRowProducesSameChain() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c4
+        let test = TestableThings.ChainDetector.c4
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
         }
@@ -80,11 +79,11 @@ final class ChainDetectorTests: XCTestCase {
 
     func testAnyStartIndexOnCenterVerticalRowProducesSameChain() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c5
+        let test = TestableThings.ChainDetector.c5
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
         }
@@ -93,11 +92,11 @@ final class ChainDetectorTests: XCTestCase {
 
     func testAnyStartIndexOnirstVerticalRowProducesSameChain() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c6
+        let test = TestableThings.ChainDetector.c6
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
         }
@@ -107,11 +106,11 @@ final class ChainDetectorTests: XCTestCase {
     // MARK: Doubled chain
     func testAnyStartIndexOnDoubledVerticalAndHorisontalChain1ProducesSameChains() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c7
+        let test = TestableThings.ChainDetector.c7
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
             chainSet.forEach {
@@ -124,11 +123,11 @@ final class ChainDetectorTests: XCTestCase {
 
     func testAnyStartIndexOnDoubledVerticalAndHorisontalChain2ProducesSameChains() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c8
+        let test = TestableThings.ChainDetector.c8
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
             chainSet.forEach {
@@ -140,14 +139,13 @@ final class ChainDetectorTests: XCTestCase {
     }
 
     // MARK: Board with holes
-
     func testHoleBreaksChain() {
 
-        let (board, checkingIndices, result) = TestableThings.ChainDetector.c9
+        let test = TestableThings.ChainDetector.c9
 
-        checkOneChainFromAnyStartingElementProducesSameChain(indices: checkingIndices, board: board) { chainsOnStep in
-            XCTAssertEqual(result, chainsOnStep)
-            XCTAssertEqual(Set(result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
+        checkOneChainFromAnyStartingElementProducesSameChain(indices: test.indices, board: test.board) { chainsOnStep in
+            XCTAssertEqual(test.result, chainsOnStep)
+            XCTAssertEqual(Set(test.result.flatMap { $0.elements }), Set(chainsOnStep.flatMap { $0.elements }))
         } onCompletion: { chainSet in
             XCTAssertEqual(chainSet.count, 1)
             chainSet.forEach {
@@ -162,13 +160,15 @@ final class ChainDetectorTests: XCTestCase {
 
 extension ChainDetectorTests {
 
-    private func checkOneChainFromAnyStartingElementProducesSameChain(indices: [Index],
-                                                                      board: Field<Entity, Tile>,
-                                                                      onDetectChain chainsDetect: (([Chain<Entity>]) -> Void) = { _ in },
-                                                                      onCompletion completion: ((Set<[Chain<Entity>]>) -> Void) = { _ in }) {
+    private func checkOneChainFromAnyStartingElementProducesSameChain<Cell: CellContainerRequirement>(
+        indices: [Index],
+        board: TheBoard<Cell>,
+        onDetectChain chainsDetect: (([Chain<Cell.Element>]) -> Void) = { _ in },
+        onCompletion completion: ((Set<[Chain<Cell.Element>]>) -> Void) = { _ in }
+    ) {
 
-        var chains: [[Chain<Entity>]] = []
-        for index in indices {
+        var chains: [[Chain<Cell.Element>]] = []
+        for index in indices[0...0] {
 
             let subChains: [Chain] = ChainDetector().detectChains(from: index, on: board).sorted()
             chains.append(subChains)
