@@ -7,6 +7,11 @@
 
 import ChainDetectorCore
 
+public typealias CDChainDetector = CDCChainDetector
+
+public typealias CDAxis = CDCAxis
+public typealias CDIndex = CDCIndex
+
 public typealias CDCombo = CDCCombo
 public typealias CDEchalon = CDCEchalon
 public typealias CDSearchable = CDCSearchable

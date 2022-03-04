@@ -5,13 +5,12 @@
 //  Created by Artem Myshkin on 18.07.2021.
 //
 
-import struct MathKit.Index
-import enum MathKit.Axis
+import ChainDetectorCore
 
-open class ChainDetector {
+open class ChainDetector: CDChainDetector {
 
-    internal typealias SearchAxis = Axis
-    public typealias Position = MathKit.Index
+    public typealias SearchAxis = CDAxis
+    public typealias Position = CDIndex
     public typealias Searchable = CDSearchable
     public typealias Combable = CDCombo
 

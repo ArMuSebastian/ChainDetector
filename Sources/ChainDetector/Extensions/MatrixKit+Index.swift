@@ -5,20 +5,17 @@
 //  Created by Artem Myshkin on 15.08.2021.
 //
 
-import struct MathKit.Index
-import enum MathKit.Axis
-
-extension MathKit.Index {
+extension CDIndex {
 
     static
-    public func + (index: MathKit.Index, step: Axis.Direction.Step) -> MathKit.Index {
+    public func + (index: CDIndex, step: CDAxis.Direction.Step) -> CDIndex {
         
-        return MathKit.Index(row: index.row + step.vertical,
-                             column: index.column + step.horisontal)
+        return CDIndex(row: index.row + step.vertical,
+                       column: index.column + step.horisontal)
     }
 
     static
-    public func + (step: Axis.Direction.Step, index: MathKit.Index) -> MathKit.Index {
+    public func + (step: CDAxis.Direction.Step, index: CDIndex) -> CDIndex {
         return index + step
     }
 

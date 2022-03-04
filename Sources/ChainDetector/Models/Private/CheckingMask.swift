@@ -5,13 +5,13 @@
 //  Created by Artem Myshkin on 03.08.2021.
 //
 
-import struct MathKit.Index
-
 extension ChainDetector {
 
     struct ChekingMask {
 
-        var performedChecks: [MathKit.Index: Self.Check] = [:]
+        typealias Index = CDIndex
+
+        var performedChecks: [Index: Self.Check] = [:]
 
     }
 
@@ -22,7 +22,7 @@ extension ChainDetector.ChekingMask {
     mutating
     func consider(
         check performedSearch: ChainDetector.SearchAxis,
-        at indices: [MathKit.Index]
+        at indices: [Index]
     ) {
 
         consider(check: check(for: performedSearch), at: indices)
@@ -32,7 +32,7 @@ extension ChainDetector.ChekingMask {
     mutating
     func consider(
         check performedSearch: ChainDetector.SearchAxis,
-        at index: MathKit.Index
+        at index: Index
     ) {
 
         consider(check: check(for: performedSearch), at: index)
@@ -40,13 +40,13 @@ extension ChainDetector.ChekingMask {
     }
 
     func shouldBeChecked(
-        at index: MathKit.Index
+        at index: Index
     ) -> Bool {
         performedChecks[index] != .all
     }
 
     func search(
-        for index: MathKit.Index
+        for index: Index
     ) -> ChainDetector.SearchAxis? {
         let currentCheckStatus = performedChecks[index]
 
@@ -84,7 +84,7 @@ extension ChainDetector.ChekingMask {
     mutating
     func consider(
         check performedCheck: Check,
-        at index: MathKit.Index
+        at index: Index
     ) {
 
         if let currentCheckStatus = performedChecks[index] {
@@ -99,7 +99,7 @@ extension ChainDetector.ChekingMask {
     mutating
     func consider(
         check performedCheck: Check,
-        at indices: [MathKit.Index]
+        at indices: [Index]
     ) {
 
         indices.forEach {
