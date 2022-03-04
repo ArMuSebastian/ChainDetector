@@ -7,7 +7,6 @@
 
 import struct MathKit.Index
 import enum MathKit.Axis
-import ChainDetectorMatrixExtensions
 
 open class ChainDetector {
 
@@ -27,10 +26,13 @@ open class ChainDetector {
     ) -> [Combo]
     where Input.Element == Element, Input.Tile == Tile,
           Input.Element == Combo.Echelon.Element,
-          Combo.Echelon.Position == Position {
+          Combo.Echelon.Position == Position
+    {
 
-        return performSearch(from: index,
-                             on: input)
+        return performSearch(
+            from: index,
+            on: input
+        )
     }
 
     private func performSearch<Element, Tile, Input: Searchable, Combo: Combable>(
@@ -39,20 +41,21 @@ open class ChainDetector {
     ) -> [Combo]
     where Input.Element == Element, Input.Tile == Tile,
           Input.Element == Combo.Echelon.Element,
-          Combo.Echelon.Position == Position {
+          Combo.Echelon.Position == Position
+    {
 
         guard checkedIndices.shouldBeChecked(at: startingIndex),
-              let search = checkedIndices.search(for: startingIndex) else {
+              let search = checkedIndices.search(for: startingIndex)
+        else {
             return []
         }
 
-        guard let chain: Combo = findChain(search: search, from: startingIndex, on: input) else {
-
+        guard let chain: Combo = findChain(search: search, from: startingIndex, on: input)
+        else {
             checkedIndices.consider(check: search, at: startingIndex)
-
             return performSearch(from: startingIndex, on: input)
         }
-        
+
         checkedIndices.consider(check: search, at: chain.elements.map { $0.position })
 
         let subc: [Combo] = chain.elements
@@ -74,10 +77,12 @@ open class ChainDetector {
     ) -> Combo?
     where Input.Element == Element, Input.Tile == Tile,
           Input.Element == Combo.Echelon.Element,
-          Combo.Echelon.Position == Position {
+          Combo.Echelon.Position == Position
+    {
 
         guard input.size.contains(startingIndex),
-              input[startingIndex].tile.type != .hole else {
+              input[startingIndex].tile.type != .hole
+        else {
             return nil
         }
 
@@ -85,15 +90,20 @@ open class ChainDetector {
         let accomodation = Combo.Echelon.init(element: element, position: startingIndex)
         let directions = search.directions
 
-        let firstAccommodation: [Combo.Echelon] = collectElements(in: directions.first,
-                                                                  from: startingIndex,
-                                                                  with: element.type,
-                                                                  on: input).reversed()
+        let firstAccommodation: [Combo.Echelon] = collectElements(
+            in: directions.first,
+            from: startingIndex,
+            with: element.type,
+            on: input
+        )
+            .reversed()
 
-        let secondAccommodation: [Combo.Echelon] = collectElements(in: directions.second,
-                                                                   from: startingIndex,
-                                                                   with: element.type,
-                                                                   on: input)
+        let secondAccommodation: [Combo.Echelon] = collectElements(
+            in: directions.second,
+            from: startingIndex,
+            with: element.type,
+            on: input
+        )
 
         let accommodation = firstAccommodation + [accomodation] + secondAccommodation
 
@@ -109,7 +119,8 @@ open class ChainDetector {
     ) -> [Echelon]
     where Input.Element == Element, Input.Tile == Tile,
           Input.Element == Echelon.Element,
-          Echelon.Position == Position {
+          Echelon.Position == Position
+    {
 
         var echelon = [Echelon]()
 
@@ -139,7 +150,8 @@ extension ChainDetector {
         from searchResult: [Combo.Echelon],
         search: SearchAxis
     ) -> Combo?
-    where Combo.Echelon.Element == Element {
+    where Combo.Echelon.Element == Element
+    {
 
         guard searchResult.count > 2 else { return nil }
 

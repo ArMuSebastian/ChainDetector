@@ -1,9 +1,7 @@
 struct SomeBoard<Cell: CellContainerRequirement>: CDSearchable {
 
     typealias Content = Cell
-    
     typealias Element = Content.Element
-    
     typealias Tile = Content.Tile
 
     private(set) var elements: Matrix<Element>

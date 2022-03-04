@@ -13,7 +13,6 @@ extension TestableThings {
         typealias ThisCell = TheBoardCell<TheElement, TheTile>
         typealias TheTestCase = TestCase<ThisCell>
 
-
         private init() {}
 
         static var allCases: [TheTestCase] {
@@ -27,38 +26,38 @@ extension TestableThings {
         static var c1: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: 3, column: $0) }],
-                               board: TestableThings.Board.h1)
+                               board: TestableThings.Board.create(from: .h1))
         }
 
         static var c2: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: 2, column: $0) }],
-                               board: TestableThings.Board.h2)
+                               board: TestableThings.Board.create(from: .h2))
         }
 
         static var c3: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: 0, column: $0) }],
-                               board: TestableThings.Board.h3)
+                               board: TestableThings.Board.create(from: .h3))
         }
 
         
         static var c4: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: $0, column: 3) }],
-                               board: TestableThings.Board.v1)
+                               board: TestableThings.Board.create(from: .v1))
         }
 
         static var c5: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: $0, column: 2) }],
-                               board: TestableThings.Board.v2)
+                               board: TestableThings.Board.create(from: .v2))
         }
 
         static var c6: TheTestCase {
 
             return composeTest(indices: [(0...3).map { .init(row: $0, column: 0) }],
-                               board: TestableThings.Board.v3)
+                               board: TestableThings.Board.create(from: .v3))
         }
 
         static var c7: TheTestCase {
@@ -67,7 +66,7 @@ extension TestableThings {
                                 [(0...3).map { .init(row: $0, column: 0) }]
                                 +
                                 [(0...3).map { .init(row: 1, column: $0) }],
-                               board: TestableThings.Board.d1)
+                               board: TestableThings.Board.create(from: .d1))
         }
 
         static var c8: TheTestCase {
@@ -80,13 +79,13 @@ extension TestableThings {
                                 [(0...3).map { .init(row: $0, column: 2) }]
                                 +
                                 [(0...2).map { .init(row: $0, column: 3) }],
-                               board: TestableThings.Board.d2)
+                               board: TestableThings.Board.create(from: .d2))
         }
 
         static var c9: TheTestCase {
 
             return composeTest(indices: [(1...3).map { .init(row: 1, column: $0) }],
-                               board: TestableThings.Board.o2,
+                               board: TestableThings.Board.create(from: .hole1),
                                producesChains: false)
         }
 

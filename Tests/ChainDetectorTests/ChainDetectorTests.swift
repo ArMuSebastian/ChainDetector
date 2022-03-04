@@ -1,9 +1,6 @@
 import XCTest
 
-import struct MathKit.Index
-
 @testable import ChainDetector
-//import class ChainDetector.ChainDetector
 
 final class ChainDetectorTests: XCTestCase {
 

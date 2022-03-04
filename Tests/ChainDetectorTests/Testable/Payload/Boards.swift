@@ -4,21 +4,11 @@ extension TestableThings {
 
         private init() {}
 
-        static var h1 = Board.create(from: Self.Payload.h1)
-        static var h2 = Board.create(from: Self.Payload.h2)
-        static var h3 = Board.create(from: Self.Payload.h3)
-
-
-        static var v1 = Board.create(from: Self.Payload.v1)
-        static var v2 = Board.create(from: Self.Payload.v2)
-        static var v3 = Board.create(from: Self.Payload.v3)
-
-
-        static var d1 = Board.create(from: Self.Payload.d1)
-        static var d2 = Board.create(from: Self.Payload.d2)
-
-
-        static var o2 = Board.create(from: Self.Payload.hole1)
+        static func from(
+            payload: Self.Payload
+        ) -> TheBoard<TheBoardCell<Payload.ElementsMatrix.Element, Payload.TileMatrix.Element>> {
+            return create(from: payload)
+        }
 
     }
 
