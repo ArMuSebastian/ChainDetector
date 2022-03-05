@@ -1,9 +1,9 @@
-public struct Chain<Element: ChainDetectorModule.Element, Key: ChainDetectorModule.Key>: CDCombo {
+public struct Chain<Element: ChainDetectorModule.Element, Key: ChainDetectorModule.Key>: ChainDetectorModule.Combination {
 
-    private(set) public var type: Axis
+    private(set) public var type: Key.Axis
     private(set) public var elements: [Accommodation<Element, Key>]
 
-    public init(elements: [Accommodation<Element, Key>], type: Axis) {
+    public init(elements: [Accommodation<Element, Key>], type: Key.Axis) {
         self.elements = elements
         self.type = type
     }
@@ -24,6 +24,8 @@ extension Chain: Comparable {
             return lhs.elements.first!.key < rhs.elements.last!.key
         case (.horisontal, .horisontal), (.vertical, .vertical):
             return lhs.elements.first!.key < rhs.elements.first!.key
+        default:
+            fatalError()
         }
     }
 

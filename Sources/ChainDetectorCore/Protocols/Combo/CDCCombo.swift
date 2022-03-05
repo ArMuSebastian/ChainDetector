@@ -1,14 +1,13 @@
 //
-//  CDCCombo.swift
+//  CDCCombination.swift
 //  
 //
 //  Created by Artem Myshkin on 11.09.2021.
 //
 
-public protocol CDCCombo
-where Echelon: CDCEchalon {
+public protocol CDCCombination {
 
-    associatedtype Echelon
+    associatedtype Echelon: CDCEchalon
     associatedtype Axis: CDCAxis
 
     typealias Element = Echelon.Element

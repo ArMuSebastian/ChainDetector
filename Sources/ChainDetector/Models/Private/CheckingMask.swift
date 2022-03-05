@@ -5,8 +5,6 @@
 //  Created by Artem Myshkin on 03.08.2021.
 //
 
-import ChainDetectorCore
-
 internal struct ChekingMask<Index: Hashable> {
 
     typealias CheckStatus = Check
@@ -18,7 +16,7 @@ internal struct ChekingMask<Index: Hashable> {
 extension ChekingMask {
 
     mutating
-    internal func consider<Axis: CDAxis>(
+    internal func consider<Axis: Module.Core.CDAxis>(
         check performedSearch: Axis,
         at indices: [Index]
     ) {
@@ -28,7 +26,7 @@ extension ChekingMask {
     }
 
     mutating
-    internal func consider<Axis: CDAxis>(
+    internal func consider<Axis: Module.Core.CDAxis>(
         check performedSearch: Axis,
         at index: Index
     ) {
@@ -43,7 +41,7 @@ extension ChekingMask {
         performedChecks[index] != .all
     }
 
-    internal func search<Axis: CDAxis>(
+    internal func search<Axis: Module.Core.CDAxis>(
         for index: Index
     ) -> Axis? {
         let currentCheckStatus = performedChecks[index]
@@ -65,7 +63,7 @@ extension ChekingMask {
 
 extension ChekingMask {
 
-    private func check<Axis: CDAxis>(
+    private func check<Axis: Module.Core.CDAxis>(
         for search: Axis
     ) -> CheckStatus {
         switch search {

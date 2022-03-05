@@ -2,11 +2,13 @@ extension TestableThings {
 
     struct Board {
 
+        typealias Struct = DoubleStruct
+
         private init() {}
 
         static func from(
             payload: Self.Payload
-        ) -> TheBoard<TheBoardCell<Payload.ElementsMatrix.Element, Payload.TileMatrix.Element>> {
+        ) -> TheBoard<Struct> {
             return create(from: payload)
         }
 
@@ -16,17 +18,17 @@ extension TestableThings {
 
 extension TestableThings.Board {
 
-    static func create<Element: ChainDetectorModule.Element, Tile: ChainDetectorModule.Tile>(
-        from entityMatrix: TheMatrix<Element>,
-        and tileMatrix: TheMatrix<Tile>
-    ) -> TheBoard<TheBoardCell<Element, Tile>> {
+    static func create<Struct: DoubledStructure>(
+        from entityMatrix: Struct.FirstStructure,
+        and tileMatrix: Struct.SecondStructure
+    ) -> TheBoard<Struct> {
         
         TheBoard.init(elements: entityMatrix, mask: tileMatrix)
     }
 
     static func create(
         from payload: Self.Payload
-    ) -> TheBoard<TheBoardCell<Self.Payload.ElementsMatrix.Element, Self.Payload.TileMatrix.Element>>
+    ) -> TheBoard<Struct>
     {
         self.create(from: payload.elements, and: payload.mask)
     }

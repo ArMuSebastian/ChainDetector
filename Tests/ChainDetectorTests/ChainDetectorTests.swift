@@ -12,7 +12,7 @@ final class ChainDetectorTests: XCTestCase {
             let nonMatchingIndices = Set(test.board.elements.indices).subtracting(test.indices)
 
             nonMatchingIndices.sorted().forEach { index in
-                let chains: [Chain] = ChainDetector.detectChains(from: index, on: test.board)
+                let chains: [Chain] = ChainDetectorModule.Detector.ClassicDetector.detectChains(from: index, on: test.board)
                 XCTAssertTrue(chains.isEmpty,
                               "Failed test \(testIndex) index \(index): must produce no chain")
             }
@@ -157,17 +157,19 @@ final class ChainDetectorTests: XCTestCase {
 
 extension ChainDetectorTests {
 
-    private func checkOneChainFromAnyStartingElementProducesSameChain<Cell: CellContainerRequirement>(
-        indices: [Index],
-        board: TheBoard<Cell>,
-        onDetectChain chainsDetect: (([Chain<Cell.Element, Index>]) -> Void) = { _ in },
-        onCompletion completion: ((Set<[Chain<Cell.Element, Index>]>) -> Void) = { _ in }
+    private func checkOneChainFromAnyStartingElementProducesSameChain<Struct: DoubledStructure>(
+        indices: [TheBoard<Struct>.Key],
+        board: TheBoard<Struct>,
+        onDetectChain chainsDetect: (([Chain<TheBoard<Struct>.CellContent.Element, TheBoard<Struct>.Key>]) -> Void) = { _ in },
+        onCompletion completion: ((Set<[Chain<TheBoard<Struct>.CellContent.Element, TheBoard<Struct>.Key>]>) -> Void) = { _ in }
     ) {
 
-        var chains: [[Chain<Cell.Element, Index>]] = []
-        for index in indices[0...0] {
+        typealias C = Chain<TheBoard<Struct>.CellContent.Element, TheBoard<Struct>.Key>
 
-            let subChains: [Chain] = ChainDetector.detectChains(from: index, on: board).sorted()
+        var chains: [[C]] = []
+        for index in indices {
+
+            let subChains: [C] = ChainDetectorModule.Detector.ClassicDetector.detectChains(from: index, on: board).sorted()
             chains.append(subChains)
             chainsDetect(subChains)
         }

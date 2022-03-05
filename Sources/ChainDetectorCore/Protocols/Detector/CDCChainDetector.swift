@@ -12,7 +12,7 @@ public protocol CDCChainDetector {
         from index: Input.Key,
         on input: Input
     ) -> [Combo]
-    where Combo: CDCCombo,
+    where Combo: CDCCombination,
           Input: CDCSearchable,
           Input.Element == Element,
           Input.Tile == Tile,

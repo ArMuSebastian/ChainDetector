@@ -1,42 +1,38 @@
 import MatrixKit
-import ChainDetector
-import ChainDetectorCore
-struct SomeBoard<Cell: CellContainerRequirement>: ChainDetectorModule.Searchable {
-
-    typealias Key = Index
-    typealias Content = Cell
-    typealias Element = Content.Element
-    typealias Tile = Content.Tile
-
-    private(set) var elements: Matrix<Element>
-    private(set) var mask: Matrix<Tile>
-
-    init(elements: Matrix<Element>, mask: Matrix<Tile>) {
-        self.elements = elements
-        self.mask = mask
-    }
-
-    var size: Size {
-        return mask.size
-    }
-
-    func contains(_ key: Index) -> Bool {
-        self.size.contains(key)
-    }
-
-    subscript(index: Index) -> Content {
-        Content(element: self[by: index], tile: self[by: index])
-    }
-
-    subscript(by idx: Index) -> Element? {
-        return elements[idx]
-    }
-
-    subscript(by idx: Index) -> Tile {
-        return mask[idx]
-    }
-
-}
+//struct SomeBoard<Cell: ChainDetectorModule.CellContainer>: ChainDetectorModule.Searchable {
+//
+//    typealias Key = Index
+//    typealias Content = Cell
+//
+//    private(set) var elements: Matrix<Element>
+//    private(set) var mask: Matrix<Tile>
+//
+//    init(elements: Matrix<Element>, mask: Matrix<Tile>) {
+//        self.elements = elements
+//        self.mask = mask
+//    }
+//
+//    var size: Size {
+//        return mask.size
+//    }
+//
+//    func contains(_ key: Index) -> Bool {
+//        self.size.contains(key)
+//    }
+//
+//    subscript(index: Index) -> Content {
+//        Content(element: self[by: index], tile: self[by: index])
+//    }
+//
+//    subscript(by idx: Index) -> Element? {
+//        return elements[idx]
+//    }
+//
+//    subscript(by idx: Index) -> Tile {
+//        return mask[idx]
+//    }
+//
+//}
 
 extension SomeBoard: CustomStringConvertible {
 
@@ -61,8 +57,20 @@ extension MathKit.Axis.Direction.Step: ChainDetectorModule.Step {
 
 
 extension Index: ChainDetectorModule.Key {
-    public typealias Axis = MathKit.Axis
+
     
+    public typealias AxisPredicate = Int
+    
+    public typealias Axis = MathKit.Axis
+
+    public func predicate(for axis: Axis) -> Int {
+        switch axis {
+        case .vertical:
+            return self.column
+        case .horisontal:
+            return self.row
+        }
+    }
     
     public func applying(delta: Axis.Direction.Step) -> Index {
         self + delta

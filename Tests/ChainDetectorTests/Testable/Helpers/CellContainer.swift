@@ -1,10 +1,4 @@
-protocol CellContainerRequirement: CDCellContainer {
-
-    init(element: Element?, tile: Tile)
-
-}
-
-struct CellContainer<Element: ChainDetectorModule.Element, Tile: ChainDetectorModule.Tile>: CellContainerRequirement {
+struct CellContainer<Element: ChainDetectorModule.Element, Tile: ChainDetectorModule.Tile>: ChainDetectorModule.CellContainer {
 
     var element: Element?
     var tile: Tile

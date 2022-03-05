@@ -1,32 +1,35 @@
 //
-//  ChainDetector.swift
+//  ClassicChainDetector.swift
 //
 //
 //  Created by Artem Myshkin on 18.07.2021.
 //
 
-import ChainDetectorCore
+public class ClassicChainDetector: Module.Core.CDChainDetector {
 
-public class ChainDetector: CDChainDetector {
+    public typealias SearchaRequirement         = Module.Core.CDSearchable
+    public typealias CombinationRequirement     = Module.Core.CDCombination
+    public typealias EchalonRequirement         = Module.Core.CDEchalon
+    public typealias ElementRequirement         = Module.Core.CDElement
+    internal typealias Mask                     = ChekingMask
 
-    public typealias Searchable = CDSearchable
-    public typealias Combable = CDCombo
-    internal typealias Mask = ChekingMask
-
-    private init() {}
+    internal required init() {}
 
     // Find matches in direction
     static
-    public func detectChains<Element, Tile, Input: Searchable, Combo: Combable>(
+    public func detectChains<Element, Tile, Input, Combo>(
         from index: Input.Key,
         on input: Input
     ) -> [Combo]
-    where Input.Element == Element, Input.Tile == Tile,
+    where Combo: CombinationRequirement,
+          Input: SearchaRequirement,
+          Input.Element == Element,
+          Input.Tile == Tile,
           Input.Element == Combo.Echelon.Element,
-          Combo.Axis == Input.Key.Axis,
-          Combo.Echelon.Key == Input.Key
+          Input.Key.Axis == Combo.Axis,
+          Input.Key == Combo.Echelon.Key
     {
-        let chainDetector = ChainDetector()
+        let chainDetector = Self()
         var checkedIndices: Mask<Input.Key> = .init()
         return chainDetector.performSearch(
             from: index,
@@ -35,15 +38,18 @@ public class ChainDetector: CDChainDetector {
         )
     }
 
-    private func performSearch<Element, Tile, Input: Searchable, Combo: Combable>(
+    private func performSearch<Element, Tile, Input, Combo>(
         from startingIndex: Input.Key,
         on input: Input,
         with checkedIndices: inout ChekingMask<Input.Key>
     ) -> [Combo]
-    where Input.Element == Element, Input.Tile == Tile,
+    where Combo: CombinationRequirement,
+          Input: SearchaRequirement,
+          Input.Element == Element,
+          Input.Tile == Tile,
           Input.Element == Combo.Echelon.Element,
-          Combo.Axis == Input.Key.Axis,
-          Combo.Echelon.Key == Input.Key
+          Input.Key.Axis == Combo.Axis,
+          Input.Key == Combo.Echelon.Key
     {
 
         guard checkedIndices.shouldBeChecked(at: startingIndex),
@@ -72,16 +78,19 @@ public class ChainDetector: CDChainDetector {
 
     // searches for all elements of seartain type in some axis from some index
     // with natural ordering
-    private func findChain<Element, Tile, Input: Searchable, Combo: Combable, Axis>(
+    private func findChain<Element, Tile, Input, Combo, Axis>(
         search: Axis,
         from startingIndex: Input.Key,
         on input: Input
     ) -> Combo?
-    where Input.Element == Element, Input.Tile == Tile,
+    where Combo: CombinationRequirement,
+          Input: SearchaRequirement,
+          Input.Element == Element,
+          Input.Tile == Tile,
           Input.Element == Combo.Echelon.Element,
-          Combo.Echelon.Key == Input.Key,
-          Combo.Axis == Axis,
-          Input.Key.Axis == Axis
+          Input.Key.Axis == Combo.Axis,
+          Input.Key == Combo.Echelon.Key,
+          Combo.Axis == Axis
     {
 
         guard input.contains(startingIndex),
@@ -115,15 +124,18 @@ public class ChainDetector: CDChainDetector {
     }
 
     // Collect all element of the same type in some direction
-    private func collectElements<Element, Tile, Input: Searchable, Echelon: CDEchalon, Axis>(
+    private func collectElements<Element, Tile, Input, Echelon, Axis>(
         in direction: Axis.Direction,
         from startingIndex: Input.Key,
         with type: Input.Element.Kind,
         on input: Input
     ) -> [Echelon]
-    where Input.Element == Element, Input.Tile == Tile,
+    where Echelon: EchalonRequirement,
+          Input: SearchaRequirement,
+          Input.Element == Element,
+          Input.Tile == Tile,
           Input.Element == Echelon.Element,
-          Echelon.Key == Input.Key,
+          Input.Key == Echelon.Key,
           Input.Key.Axis == Axis
     {
 
@@ -147,15 +159,14 @@ public class ChainDetector: CDChainDetector {
         return echelon
     }
 
-}
-
-extension ChainDetector {
-
-    private func combo<Element: CDCElement, Combo: Combable, Axis>(
+    // NOTE Elementt
+    private func combo<Element, Combo, Axis>(
         from searchResult: [Combo.Echelon],
         search: Axis
     ) -> Combo?
-    where Combo.Echelon.Element == Element,
+    where Combo: CombinationRequirement,
+          Element: ElementRequirement,
+          Combo.Echelon.Element == Element,
           Combo.Axis == Axis
     {
 

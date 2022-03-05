@@ -2,16 +2,20 @@ extension TestableThings {
 
     struct ChainDetector {
 
-        struct TestCase<Cell: CellContainerRequirement> {
+        struct TestCase<Struct: DoubledStructure> {
 
-            var board: TheBoard<Cell>
+            typealias Board = TheBoard<Struct>
+            typealias Chaining = Chain<Struct.Content.Element, Struct.GenericKey>
+            typealias Index = Struct.GenericKey
+
+            var board: Board
             var indices: [Index]
-            var result: [Chain<Cell.Element, Index>]
+            var result: [Chaining]
 
         }
 
-        typealias ThisCell = TheBoardCell<TheElement, TheTile>
-        typealias TheTestCase = TestCase<ThisCell>
+        typealias Struct = DoubleStruct
+        typealias TheTestCase = TestCase<DoubleStruct>
 
         private init() {}
 
@@ -95,19 +99,19 @@ extension TestableThings {
 
 extension TestableThings.ChainDetector {
 
-    static private func chainsFrom<Cell: CellContainerRequirement>(
-        board: TheBoard<Cell>,
-        indices: [[Index]]
-    ) -> [Chain<Cell.Element, Index>] {
-        let chains: [Chain<Cell.Element, Index>] = indices.map { chainIndices in
-            let elements = chainIndices.map { index -> Accommodation<Cell.Element, Index> in
-                let e: Cell.Element = board[by: index]!
+    static private func chainsFrom<Struct: DoubledStructure>(
+        board: TestCase<Struct>.Board,
+        indices: [[TestCase<Struct>.Index]]
+    ) -> [TestCase<Struct>.Chaining] {
+        let chains: [TestCase<Struct>.Chaining] = indices.map { chainIndices in
+            let elements = chainIndices.map { index -> Accommodation<Struct.Content.Element, Struct.GenericKey> in
+                let e: Struct.Content.Element = board[index].element!
                 return Accommodation(element: e, key: index)
             }
             
-            if Set(chainIndices.map({ $0.column })).count == 1 {
+            if Set(chainIndices.map({ $0.predicate(for: .vertical) })).count == 1 {
                 return Chain(elements: elements, type: .vertical)
-            } else if Set(chainIndices.map({ $0.row })).count == 1 {
+            } else if Set(chainIndices.map({ $0.predicate(for: .horisontal) })).count == 1 {
                 return Chain(elements: elements, type: .horisontal)
             }
             
@@ -117,11 +121,11 @@ extension TestableThings.ChainDetector {
     }
 
 
-    static private func composeTest<Cell: CellContainerRequirement>(
-        indices: [[Index]],
-        board: TheBoard<Cell>,
+    static private func composeTest<Struct: DoubledStructure>(
+        indices: [[TestCase<Struct>.Index]],
+        board: TestCase<Struct>.Board,
         producesChains: Bool = true
-    ) -> TestCase<Cell> {
+    ) -> TestCase<Struct> {
         let result = producesChains ? chainsFrom(board: board, indices: indices) : []
 
         return TestCase(

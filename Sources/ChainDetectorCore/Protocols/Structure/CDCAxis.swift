@@ -32,7 +32,7 @@ public protocol CDCDirection {
 
 }
 
-public protocol CDCAxis: Equatable {
+public protocol CDCAxis: Hashable {
 
     associatedtype Direction: CDCDirection
 
