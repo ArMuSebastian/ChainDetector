@@ -26,17 +26,12 @@ let package = Package(
     targets:
         [
             .target(
-                name: "ChainDetectorCore",
-                dependencies:
-                    [
-                        "MathKit"
-                    ]
+                name: "ChainDetectorCore"
             ),
             .target(
                 name: "ChainDetector",
                 dependencies:
                     [
-                        "MathKit",
                         "ChainDetectorCore",
                     ]
             ),
@@ -44,6 +39,7 @@ let package = Package(
                 name: "ChainDetectorTests",
                 dependencies:
                     [
+                        "MathKit",
                         "ChainDetector"
                     ]
             ),

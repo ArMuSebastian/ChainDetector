@@ -5,16 +5,14 @@
 //  Created by Artem Myshkin on 11.09.2021.
 //
 
-import Foundation
-
 public protocol CDCEchalon: Hashable {
 
-    associatedtype Position
+    associatedtype Key: CDCKey
     associatedtype Element
 
     var element: Element { get }
-    var position: Position { get }
+    var key: Key { get }
 
-    init(element: Element, position: Position)
+    init(element: Element, key: Key)
 
 }

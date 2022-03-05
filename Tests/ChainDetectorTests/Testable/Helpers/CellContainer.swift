@@ -4,7 +4,7 @@ protocol CellContainerRequirement: CDCellContainer {
 
 }
 
-struct CellContainer<Element: CDSearchableElement, Tile: CDSearchableTile>: CellContainerRequirement {
+struct CellContainer<Element: ChainDetectorModule.Element, Tile: ChainDetectorModule.Tile>: CellContainerRequirement {
 
     var element: Element?
     var tile: Tile

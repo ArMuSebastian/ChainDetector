@@ -7,15 +7,16 @@
 
 import Foundation
 
-extension ChainDetector.ChekingMask {
+extension ChekingMask {
 
-    enum Check {
+    internal enum Check {
 
         case vertical
         case horisontal
         case all
 
-        static func + (lhs: Check, rhs: Check) -> Check {
+        static
+        internal func + (lhs: Check, rhs: Check) -> Check {
             if (lhs == .all || rhs == .all) {
                 return .all
             }

@@ -12,7 +12,7 @@ final class ChainDetectorTests: XCTestCase {
             let nonMatchingIndices = Set(test.board.elements.indices).subtracting(test.indices)
 
             nonMatchingIndices.sorted().forEach { index in
-                let chains: [Chain] = ChainDetector().detectChains(from: index, on: test.board)
+                let chains: [Chain] = ChainDetector.detectChains(from: index, on: test.board)
                 XCTAssertTrue(chains.isEmpty,
                               "Failed test \(testIndex) index \(index): must produce no chain")
             }
@@ -160,14 +160,14 @@ extension ChainDetectorTests {
     private func checkOneChainFromAnyStartingElementProducesSameChain<Cell: CellContainerRequirement>(
         indices: [Index],
         board: TheBoard<Cell>,
-        onDetectChain chainsDetect: (([Chain<Cell.Element>]) -> Void) = { _ in },
-        onCompletion completion: ((Set<[Chain<Cell.Element>]>) -> Void) = { _ in }
+        onDetectChain chainsDetect: (([Chain<Cell.Element, Index>]) -> Void) = { _ in },
+        onCompletion completion: ((Set<[Chain<Cell.Element, Index>]>) -> Void) = { _ in }
     ) {
 
-        var chains: [[Chain<Cell.Element>]] = []
+        var chains: [[Chain<Cell.Element, Index>]] = []
         for index in indices[0...0] {
 
-            let subChains: [Chain] = ChainDetector().detectChains(from: index, on: board).sorted()
+            let subChains: [Chain] = ChainDetector.detectChains(from: index, on: board).sorted()
             chains.append(subChains)
             chainsDetect(subChains)
         }

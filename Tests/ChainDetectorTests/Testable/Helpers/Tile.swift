@@ -1,4 +1,4 @@
-struct SomeTile: CDSearchableTile {
+struct SomeTile: ChainDetectorModule.Tile {
 
     var type: `Type`
 
@@ -6,7 +6,7 @@ struct SomeTile: CDSearchableTile {
 
 extension SomeTile {
 
-    enum `Type`: Int, CDSearchableTileType {
+    enum `Type`: Int, ChainDetectorModule.TileType {
 
         case empty = 0
         case normal
@@ -16,5 +16,5 @@ extension SomeTile {
         static var hole: SomeTile.`Type` = .empty
 
     }
-    
+
 }

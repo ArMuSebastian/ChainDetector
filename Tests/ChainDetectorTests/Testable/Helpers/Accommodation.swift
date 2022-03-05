@@ -1,13 +1,11 @@
-public struct Accommodation<Element: CDSearchableElement>: CDEchalon {
-
-    public typealias Position = MathKit.Index
+public struct Accommodation<Element: ChainDetectorModule.Element, Key: ChainDetectorModule.Key>: ChainDetectorModule.Echalon {
 
     public let element: Element
-    public let position: Position
+    public let key: Key
 
-    public init(element: Element, position: Position) {
+    public init(element: Element, key: Key) {
         self.element = element
-        self.position = position
+        self.key = key
     }
 
 }
@@ -15,11 +13,11 @@ public struct Accommodation<Element: CDSearchableElement>: CDEchalon {
 extension Accommodation: Equatable {
 
     static
-    public func == (lhs: Accommodation<Element>, rhs: Accommodation<Element>) -> Bool {
+    public func == (lhs: Accommodation<Element, Key>, rhs: Accommodation<Element, Key>) -> Bool {
         return
             lhs.element.type == rhs.element.type
             &&
-            lhs.position == rhs.position
+            lhs.key == rhs.key
     }
 
 }

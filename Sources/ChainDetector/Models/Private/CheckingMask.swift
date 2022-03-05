@@ -5,23 +5,21 @@
 //  Created by Artem Myshkin on 03.08.2021.
 //
 
-extension ChainDetector {
+import ChainDetectorCore
 
-    struct ChekingMask {
+internal struct ChekingMask<Index: Hashable> {
 
-        typealias Index = CDIndex
+    typealias CheckStatus = Check
 
-        var performedChecks: [Index: Self.Check] = [:]
-
-    }
+    internal var performedChecks: [Index: CheckStatus] = [:]
 
 }
 
-extension ChainDetector.ChekingMask {
+extension ChekingMask {
 
     mutating
-    func consider(
-        check performedSearch: ChainDetector.SearchAxis,
+    internal func consider<Axis: CDAxis>(
+        check performedSearch: Axis,
         at indices: [Index]
     ) {
 
@@ -30,8 +28,8 @@ extension ChainDetector.ChekingMask {
     }
 
     mutating
-    func consider(
-        check performedSearch: ChainDetector.SearchAxis,
+    internal func consider<Axis: CDAxis>(
+        check performedSearch: Axis,
         at index: Index
     ) {
 
@@ -39,18 +37,18 @@ extension ChainDetector.ChekingMask {
 
     }
 
-    func shouldBeChecked(
+    internal func shouldBeChecked(
         at index: Index
     ) -> Bool {
         performedChecks[index] != .all
     }
 
-    func search(
+    internal func search<Axis: CDAxis>(
         for index: Index
-    ) -> ChainDetector.SearchAxis? {
+    ) -> Axis? {
         let currentCheckStatus = performedChecks[index]
 
-        let desiredSearch: ChainDetector.SearchAxis?
+        let desiredSearch: Axis?
         switch currentCheckStatus {
         case .all:
             desiredSearch = nil
@@ -65,25 +63,24 @@ extension ChainDetector.ChekingMask {
 
 }
 
-extension ChainDetector.ChekingMask {
+extension ChekingMask {
 
-
-    private
-    func check(
-        for search: ChainDetector.SearchAxis
-    ) -> Check {
+    private func check<Axis: CDAxis>(
+        for search: Axis
+    ) -> CheckStatus {
         switch search {
         case .vertical:
             return .vertical
         case .horisontal:
             return .horisontal
+        default:
+            fatalError("New search Axis is added, consider this")
         }
     }
 
     private
-    mutating
-    func consider(
-        check performedCheck: Check,
+    mutating func consider(
+        check performedCheck: CheckStatus,
         at index: Index
     ) {
 
@@ -96,9 +93,8 @@ extension ChainDetector.ChekingMask {
     }
 
     private
-    mutating
-    func consider(
-        check performedCheck: Check,
+    mutating func consider(
+        check performedCheck: CheckStatus,
         at indices: [Index]
     ) {
 

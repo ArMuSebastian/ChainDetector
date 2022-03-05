@@ -9,10 +9,11 @@ import Foundation
 
 public protocol CDCCellContainer {
 
-    associatedtype Element: CDCSearchableElement
-    associatedtype Tile: CDCSearchableTile
+    associatedtype Element: CDCElement
+    associatedtype Tile: CDCTile
 
     var element: Element? { get }
     var tile: Tile { get }
 
+    init(element: Element?, tile: Tile)
 }

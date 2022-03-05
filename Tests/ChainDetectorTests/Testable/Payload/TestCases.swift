@@ -6,7 +6,7 @@ extension TestableThings {
 
             var board: TheBoard<Cell>
             var indices: [Index]
-            var result: [Chain<Cell.Element>]
+            var result: [Chain<Cell.Element, Index>]
 
         }
 
@@ -98,11 +98,11 @@ extension TestableThings.ChainDetector {
     static private func chainsFrom<Cell: CellContainerRequirement>(
         board: TheBoard<Cell>,
         indices: [[Index]]
-    ) -> [Chain<Cell.Element>] {
-        let chains: [Chain<Cell.Element>] = indices.map { chainIndices in
-            let elements = chainIndices.map { index -> Accommodation<Cell.Element> in
+    ) -> [Chain<Cell.Element, Index>] {
+        let chains: [Chain<Cell.Element, Index>] = indices.map { chainIndices in
+            let elements = chainIndices.map { index -> Accommodation<Cell.Element, Index> in
                 let e: Cell.Element = board[by: index]!
-                return Accommodation(element: e, position: index)
+                return Accommodation(element: e, key: index)
             }
             
             if Set(chainIndices.map({ $0.column })).count == 1 {

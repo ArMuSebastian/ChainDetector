@@ -7,18 +7,28 @@
 
 import ChainDetectorCore
 
-public typealias CDChainDetector = CDCChainDetector
-
-public typealias CDAxis = CDCAxis
-public typealias CDIndex = CDCIndex
-
-public typealias CDCombo = CDCCombo
-public typealias CDEchalon = CDCEchalon
+// MARK: - Board
 public typealias CDSearchable = CDCSearchable
 public typealias CDCellContainer = CDCCellContainer
 
-public typealias CDSearchableTile = CDCSearchableTile
-public typealias CDSearchableTileType = CDCSearchableTileType
+// MARK: - Combo
+public typealias CDCombo = CDCCombo
+public typealias CDEchalon = CDCEchalon
 
-public typealias CDSearchableElement = CDCSearchableElement
-public typealias CDSearchableElementType = CDCSearchableElementType
+// MARK: - Detector
+public typealias CDChainDetector = CDCChainDetector
+
+// MARK: - ELEMENT
+public typealias CDElement = CDCElement
+public typealias CDElementType = CDCElementType
+
+// MARK: - Structure
+public typealias CDAxis = CDCAxis
+public typealias CDDirection = CDCDirection
+public typealias CDStep = CDCStep
+
+public typealias CDKey = CDCKey
+
+// MARK: - Tile
+public typealias CDTile = CDCTile
+public typealias CDTileType = CDCTileType

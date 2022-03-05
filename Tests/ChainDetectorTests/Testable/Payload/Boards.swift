@@ -16,7 +16,7 @@ extension TestableThings {
 
 extension TestableThings.Board {
 
-    static func create<Element: CDSearchableElement, Tile: CDSearchableTile>(
+    static func create<Element: ChainDetectorModule.Element, Tile: ChainDetectorModule.Tile>(
         from entityMatrix: TheMatrix<Element>,
         and tileMatrix: TheMatrix<Tile>
     ) -> TheBoard<TheBoardCell<Element, Tile>> {

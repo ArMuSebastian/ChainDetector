@@ -1,9 +1,9 @@
-public struct Chain<Element: CDSearchableElement>: CDCombo {
+public struct Chain<Element: ChainDetectorModule.Element, Key: ChainDetectorModule.Key>: CDCombo {
 
     private(set) public var type: Axis
-    private(set) public var elements: [Accommodation<Element>]
+    private(set) public var elements: [Accommodation<Element, Key>]
 
-    public init(elements: [Accommodation<Element>], type: Axis) {
+    public init(elements: [Accommodation<Element, Key>], type: Axis) {
         self.elements = elements
         self.type = type
     }
@@ -16,14 +16,14 @@ extension Chain: Comparable {
     // if chain 1 most top element if topper that chain 2 most top element
     // if chain 1 most left element if lefter that chain 2 most left element
     static
-    public func < (lhs: Chain<Element>, rhs: Chain<Element>) -> Bool {
+    public func < (lhs: Chain<Element, Key>, rhs: Chain<Element, Key>) -> Bool {
         switch (lhs.type, rhs.type) {
         case (.vertical, .horisontal):
-            return lhs.elements.last!.position < rhs.elements.first!.position
+            return lhs.elements.last!.key < rhs.elements.first!.key
         case (.horisontal, .vertical):
-            return lhs.elements.first!.position < rhs.elements.last!.position
+            return lhs.elements.first!.key < rhs.elements.last!.key
         case (.horisontal, .horisontal), (.vertical, .vertical):
-            return lhs.elements.first!.position < rhs.elements.first!.position
+            return lhs.elements.first!.key < rhs.elements.first!.key
         }
     }
 
@@ -32,7 +32,7 @@ extension Chain: Comparable {
 extension Chain: Equatable {
 
     static
-    public func == (lhs: Chain<Element>, rhs: Chain<Element>) -> Bool {
+    public func == (lhs: Chain<Element, Key>, rhs: Chain<Element, Key>) -> Bool {
         return
             lhs.elements == rhs.elements
             &&

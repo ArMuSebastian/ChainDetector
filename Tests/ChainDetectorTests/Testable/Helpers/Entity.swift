@@ -1,4 +1,4 @@
-struct SomeElement: CDSearchableElement {
+struct SomeElement: ChainDetectorModule.Element {
 
     var type: `Type`
 
@@ -6,7 +6,7 @@ struct SomeElement: CDSearchableElement {
 
 extension SomeElement {
 
-    enum `Type`: CDSearchableElementType {
+    enum `Type`: ChainDetectorModule.ElementType {
 
         case a
         case b
@@ -14,5 +14,5 @@ extension SomeElement {
         case d
 
     }
-    
+
 }
