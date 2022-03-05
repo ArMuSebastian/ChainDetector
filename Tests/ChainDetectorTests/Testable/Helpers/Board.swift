@@ -1,38 +1,43 @@
-import MatrixKit
-//struct SomeBoard<Cell: ChainDetectorModule.CellContainer>: ChainDetectorModule.Searchable {
-//
-//    typealias Key = Index
-//    typealias Content = Cell
-//
-//    private(set) var elements: Matrix<Element>
-//    private(set) var mask: Matrix<Tile>
-//
-//    init(elements: Matrix<Element>, mask: Matrix<Tile>) {
-//        self.elements = elements
-//        self.mask = mask
-//    }
-//
-//    var size: Size {
-//        return mask.size
-//    }
-//
-//    func contains(_ key: Index) -> Bool {
-//        self.size.contains(key)
-//    }
-//
-//    subscript(index: Index) -> Content {
-//        Content(element: self[by: index], tile: self[by: index])
-//    }
-//
-//    subscript(by idx: Index) -> Element? {
-//        return elements[idx]
-//    }
-//
-//    subscript(by idx: Index) -> Tile {
-//        return mask[idx]
-//    }
-//
-//}
+protocol SingleStructure {
+
+    associatedtype Key
+    associatedtype Element
+
+    func contains(_ key: Key) -> Bool
+    subscript(_ key: Key) -> Element { get }
+
+}
+
+protocol DoubledStructure
+where GenericKey == FirstStructure.Key, GenericKey == SecondStructure.Key,
+      Content.Element == FirstStructure.Element, Content.Tile == SecondStructure.Element {
+
+    associatedtype FirstStructure: SingleStructure
+    associatedtype SecondStructure: SingleStructure
+
+    associatedtype GenericKey: ChainDetectorModule.Key
+    associatedtype Content: ChainDetectorModule.CellContainer
+
+}
+
+struct SomeBoard<InnerStructure: DoubledStructure>: ChainDetectorModule.Searchable {
+
+    public typealias Structure = InnerStructure
+
+    private(set) var elements: InnerStructure.FirstStructure
+    private(set) var mask: InnerStructure.SecondStructure
+
+    subscript(index: Structure.GenericKey) -> Structure.Content {
+        let element = elements[index]
+        let tile    = mask[index]
+        return CellContent(element: element, tile: tile)
+    }
+
+    func contains(_ key: Structure.GenericKey) -> Bool {
+        mask.contains(key) && elements.contains(key)
+    }
+
+}
 
 extension SomeBoard: CustomStringConvertible {
 
@@ -58,7 +63,6 @@ extension MathKit.Axis.Direction.Step: ChainDetectorModule.Step {
 
 extension Index: ChainDetectorModule.Key {
 
-    
     public typealias AxisPredicate = Int
     
     public typealias Axis = MathKit.Axis
